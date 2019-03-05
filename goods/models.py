@@ -19,6 +19,27 @@ class Goods(models.Model):
     def __unicode__(self):
         return u'Goods:%s' % self.gname
 
+    def getGImg(self):
+        return self.inventory_set.first().color.colorurl
+
+    def getColorList(self):
+        colorList = []
+        for inventory in self.inventory_set.all():
+            color = inventory.color
+            if color not in colorList:
+                colorList.append(color)
+
+        return colorList
+
+    def getSizeList(self):
+        sizeList = []
+        for inventory in self.inventory_set.all():
+            size = inventory.size
+            if size not in sizeList:
+                sizeList.append(size)
+
+        return sizeList
+
 
 class GoodsDetailName(models.Model):
     gdname = models.CharField(max_length=30)
