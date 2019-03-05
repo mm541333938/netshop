@@ -43,7 +43,7 @@
                     <ul class="MinImgList"><!--是不是第一个-->
                         {% for color in goods.getColorList %}
 
-                            <li class="MinImg{% if forloop.first %}active{% endif %} " colorid="{{ color.id }}"><img
+                            <li class="MinImg{% if forloop.first %} active{% endif %}" colorid="{{ color.id }}"><img
                                     src="{{ color.colorurl }}" width="30px" height="30px"></li>
 
                         {% endfor %}
