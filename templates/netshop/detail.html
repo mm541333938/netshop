@@ -15,7 +15,7 @@
                 </li>
 
                 <li class="bread-item">
-                    <a href="/categorys/{{ goods.category_id }}">女装</a>&gt;
+                    <a href="/category/{{ goods.category_id }}">女装</a>&gt;
                 </li>
 
                 <li class="bread-item">
@@ -95,70 +95,33 @@
                     <li><a href="http://127.0.0.1:8000/goodsdetails/?goodsid=26#">细节做工</a></li>
                 </ul>
             </div>
+
+
             <div class="zhanshi">
+                {% for gdname, gdurl in goods.getDetailList.items %}
+                    <div class="zhanshi-model">
+                        <p>{{ gdname }}</p>
+                        <div class="line"></div>
+                        {% for gdurl in gdurlList %}
+                            <img src="{{ gdurl }}" alt="">
+                        {% endfor %}
+                    </div>
 
-
-                <div class="zhanshi-model">
-                    <p>参数规格</p>
-                    <div class="line"></div>
-
-                    <img src="./首页_files/B5_03.png" alt="">
-
-
-                </div>
-
-
-                <div class="zhanshi-model">
-                    <p>整体款式</p>
-                    <div class="line"></div>
-
-                    <img src="./首页_files/B5_06.png" alt="">
-
-
-                </div>
-
-
-                <div class="zhanshi-model">
-                    <p>模特实拍</p>
-                    <div class="line"></div>
-
-                    <img src="./首页_files/1_mpwtoGA.jpg" alt="">
-
-                    <img src="./首页_files/2_UuQkY4b.jpg" alt="">
-
-                    <img src="./首页_files/3_ViMgWv6.jpg" alt="">
-
-                    <img src="./首页_files/4_BDmgdFv.jpg" alt="">
-
-                    <img src="./首页_files/5_ozWIsej.jpg" alt="">
-
-                    <img src="./首页_files/6_Pny8yTQ.jpg" alt="">
-
-                    <img src="./首页_files/7_K4tB09L.jpg" alt="">
-
-                    <img src="./首页_files/8_60MJMwS.jpg" alt="">
-
-                    <img src="./首页_files/9_8YomGSk.jpg" alt="">
-
-                    <img src="./首页_files/10_vonnLjk.jpg" alt="">
-
-
-                </div>
-
+                {% endfor %}
 
             </div>
         </div>
     </div>
 
     <div class="goods-model" style="margin-right: -18px;text-align: center">
-        <img src="./首页_files/recommend.png" style="position: relative;left: -10px;top: 10px">
+        <img src="{% static 'netshop/images/recommend.png' %}" style="position: relative;left: -10px;top: 10px">
 
         <div class="goods-content">
 
 
             <div class="good">
                 <a href="http://127.0.0.1:8000/goodsdetails/5">
-                    <img src="./首页_files/bai_mt1VrH5.jpg" width="285px" height="285px">
+                    <img src="{% static 'netshop/images/bai_mt1VrH5.jpg' %}" width="285px" height="285px">
                     <p class="name">秋时尚印花两件套装裙</p>
                     <div class="price">
                         <i>￥</i>
@@ -174,7 +137,7 @@
 
             <div class="good">
                 <a href="http://127.0.0.1:8000/goodsdetails/6">
-                    <img src="./首页_files/hong_y7wQwRw.jpg" width="285px" height="285px">
+                    <img src="{% static 'netshop/images/hong_y7wQwRw.jpg' %}" width="285px" height="285px">
                     <p class="name">韩版侧开叉宽松毛衣</p>
                     <div class="price">
                         <i>￥</i>
@@ -190,7 +153,7 @@
 
             <div class="good">
                 <a href="http://127.0.0.1:8000/goodsdetails/18">
-                    <img src="./首页_files/lv_eFlravj.jpg" width="285px" height="285px">
+                    <img src="{% static 'netshop/images/lv_sxlJZTq.jpg' %}" width="285px" height="285px">
                     <p class="name">时尚修身两件套装裙</p>
                     <div class="price">
                         <i>￥</i>

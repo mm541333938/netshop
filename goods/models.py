@@ -40,6 +40,20 @@ class Goods(models.Model):
 
         return sizeList
 
+    def getDetailList(self):
+        import collections
+        # 创建有序字典，来存放详情信息key 详情名称value图片列表
+        datas = collections.OrderedDict()
+
+        for goodsdetail in self.goodsdetail_set.all():
+            # 获取详情名称
+            gdname = goodsdetail.name()
+            if gdname not in datas.keys():
+                datas[gdname] = [goodsdetail.gdurl]
+            else:
+                datas[gdname].append(goodsdetail.gdurl)
+        return datas
+
 
 class GoodsDetailName(models.Model):
     gdname = models.CharField(max_length=30)
@@ -52,6 +66,10 @@ class GoodsDetail(models.Model):
     gdurl = models.ImageField(upload_to='')
     gdname = models.ForeignKey(GoodsDetailName, on_delete=models.CASCADE)
     goods = models.ForeignKey(Goods, on_delete=models.CASCADE)
+
+    # 获取详情名称
+    def name(self):
+        return self.gdname.gdname
 
 
 class Size(models.Model):
