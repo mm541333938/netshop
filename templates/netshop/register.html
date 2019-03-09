@@ -70,7 +70,7 @@
             var password = $('#pwd').val();
 
             //简单校验
-            if (account.length < 6 || !isEmail(account)) {
+            if (account.length < 6 || !isEmail(account)||checkUname(account)) {
                 $('#aSpan').text('邮箱长度不能小于六位');
                 return false;
             }

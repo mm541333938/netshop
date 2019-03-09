@@ -1,4 +1,4 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
@@ -18,8 +18,8 @@ class RegisterView(View):
         user = UserInfo.objects.create(uname=uname, pwd=pwd)
 
         if user:
-            return HttpResponse('True')
-        return HttpResponse('False')
+            return HttpResponseRedirect('/user/center/')
+        return HttpResponseRedirect('/user/register')
 
 
 class CheckUnameView(View):
@@ -33,3 +33,8 @@ class CheckUnameView(View):
         if userList:
             flag = True
         return JsonResponse({'flag': flag})
+
+
+class CenterView(View):
+    def get(self,request):
+        return render(request, 'center.html')
