@@ -1,5 +1,6 @@
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
+from utils import code
 
 # Create your views here.
 from django.views import View
@@ -18,6 +19,9 @@ class RegisterView(View):
         user = UserInfo.objects.create(uname=uname, pwd=pwd)
 
         if user:
+            # 将用户信息存放到session对象中
+            request.session['user'] = user
+
             return HttpResponseRedirect('/user/center/')
         return HttpResponseRedirect('/user/register')
 
@@ -36,5 +40,49 @@ class CheckUnameView(View):
 
 
 class CenterView(View):
-    def get(self,request):
-        return render(request, 'center.html')
+    def get(self, request):
+        return render(request, 'netshop/center.html')
+
+
+class LogoutView(View):
+    def post(self, request):
+        # 清楚session 中登录用户信息
+        if 'user' in request.session:
+            del request.session['user']
+
+        return JsonResponse({'delFlag': True})
+
+
+class LoginView(View):
+    def get(self, request):
+        return render(request, 'netshop/login.html')
+
+    def post(self, request):
+        uname = request.POST.get('uname', '')
+        pwd = request.POST.get('pwd', '')
+
+        # 查询数据库中是否存在
+        userList = UserInfo.objects.filter(uname=uname, pwd=pwd)
+        if userList:
+            request.session['user'] = userList[0]
+            return HttpResponseRedirect('/user/center/')
+        return HttpResponseRedirect('/user/login/')
+
+
+class LoadCodeView(View):
+    def get(self, request):
+        img, str = code.gene_code()
+        # 将生成的验证码发到session中
+        request.session['sessionCode'] = str
+        return HttpResponse(img, content_type='image/png')
+
+
+class CheckCodeView(View):
+    def get(self, request):
+        # 获取input中的值
+        code = request.GET.get('code', '')
+        # 获取生成的验证码
+        sessionCode = request.session.get('sessionCode', None)
+        flag = code == sessionCode
+
+        return JsonResponse({'checkFlag': flag})
