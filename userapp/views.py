@@ -6,7 +6,7 @@ from utils import code
 # Create your views here.
 from django.views import View
 
-from userapp.models import UserInfo, Area
+from userapp.models import UserInfo, Area, Address
 
 
 class RegisterView(View):
@@ -91,7 +91,27 @@ class CheckCodeView(View):
 
 class AddressView(View):
     def get(self, request):
+        # 获取当前用户的收货地址
+        addrList = Address.objects.all()
+
+        return render(request, 'netshop/address.html', context={'addrList': addrList})
         return render(request, 'netshop/address.html')
+
+    def post(self, request):
+        # 获取请求参数
+        aname = request.POST.get('aname', '')
+        aphone = request.POST.get('aphone', '')
+        addr = request.POST.get('addr', '')
+        user = request.session.get('user', '')
+        # 插入数据库
+        address = Address.objects.create(aname=aname, aphone=aphone, addr=addr, userinfo=user,
+                                         isdefault=(lambda count: True if count == 0 else False)(
+                                             user.address_set.all().count()))
+
+        # 获取当前用户的收货地址
+        addrList = Address.objects.all()
+
+        return render(request, 'netshop/address.html', context={'addrList': addrList})
 
 
 class LoadArea(View):

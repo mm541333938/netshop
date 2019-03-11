@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^', include('goods.urls')),
     re_path(r'^user/', include('userapp.urls')),
+    re_path(r'^cart/', include('cart.urls')),
 ]
 
 if DEBUG:
