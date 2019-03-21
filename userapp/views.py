@@ -1,6 +1,8 @@
 from django.core.serializers import serialize
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
+
+from cart.cartmanager import SessionCartManager
 from utils import code
 
 # Create your views here.
@@ -56,6 +58,13 @@ class LogoutView(View):
 
 class LoginView(View):
     def get(self, request):
+        # 获取请求参数
+        red = request.GET.get('redirct', '')
+
+        if not red:
+            # return render(request, 'netshop/login.html', {'red': red})
+            return HttpResponseRedirect('/user/login/?red=' + red)
+
         return render(request, 'netshop/login.html')
 
     def post(self, request):
@@ -65,7 +74,16 @@ class LoginView(View):
         # 查询数据库中是否存在
         userList = UserInfo.objects.filter(uname=uname, pwd=pwd)
         if userList:
+
             request.session['user'] = userList[0]
+            red = request.POST.get('redirect')
+
+            if red == 'cart':
+                # 将session 中的购物项移动到数据库
+                SessionCartManager(request.session).migrateSession2DB()
+
+                return HttpResponseRedirect('/cart/queryAll/')
+
             return HttpResponseRedirect('/user/center/')
         return HttpResponseRedirect('/user/login/')
 

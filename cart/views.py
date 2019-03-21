@@ -17,6 +17,22 @@ class AddCartView(View):
             cartManagerObj = cartmanager.getCartManger(request)
             cartManagerObj.add(**request.POST.dict())
 
+        elif flag == 'plus':
+
+            cartManagerObj = cartmanager.getCartManger(request)
+            # 修改数据库数量
+            cartManagerObj.update(step=1, **request.POST.dict())
+
+        elif flag == 'minus':
+            # 创建对象
+            cartManagerObj = cartmanager.getCartManger(request)
+            # 修改数据库数量
+            cartManagerObj.update(step=-1, **request.POST.dict())
+
+        elif flag == 'delete':
+            cartManagerObj = cartmanager.getCartManger(request)
+            cartManagerObj.delete(**request.POST.dict())
+
         return HttpResponseRedirect('/cart/queryAll/')
 
 
