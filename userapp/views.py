@@ -61,11 +61,11 @@ class LoginView(View):
         # 获取请求参数
         red = request.GET.get('redirct', '')
 
-        if not red:
-            # return render(request, 'netshop/login.html', {'red': red})
-            return HttpResponseRedirect('/user/login/?red=' + red)
+        # if not red:
+        #     # return render(request, 'netshop/login.html', {'red': red})
+        #     return HttpResponseRedirect('/user/login/?red=' + red)
 
-        return render(request, 'netshop/login.html')
+        return render(request, 'netshop/login.html', {'red': red})
 
     def post(self, request):
         uname = request.POST.get('uname', '')

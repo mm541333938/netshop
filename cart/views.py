@@ -9,6 +9,9 @@ from cart import cartmanager
 
 class AddCartView(View):
     def post(self, request):
+        # 在多级字典数据的时候需要设置这个，能实时存放数据到session中
+        request.session.modified = True
+
         # 获取当前操作类型
         flag = request.POST.get('flag')
 

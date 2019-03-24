@@ -212,16 +212,18 @@
         //单击结算按钮
         $('#jiesuan').click(function () {
 
-
-            cks = $('.son_check')
+            // 获取所有购物项的复选框数组
+            var cks = $('.son_check')
+            // 定义一个数组
             var cartitem = []
+
             $.each(cks, function (index, ck) {
                 if ($(ck).prop('checked')) {
                     var goodsid = $(ck).parents('.order_lists').attr('goodsid')
                     var sizeid = $(ck).parents('.order_lists').attr('sizeid')
                     var colorid = $(ck).parents('.order_lists').attr('colorid')
 
-
+                    //将json 对象转换成json的字符串
                     cartitem.push(JSON.stringify({'goodsid': goodsid, 'sizeid': sizeid, 'colorid': colorid}))
 
 
